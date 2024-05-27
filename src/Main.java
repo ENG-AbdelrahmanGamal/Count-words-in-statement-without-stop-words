@@ -1,12 +1,14 @@
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-
+    // create object from scanner to read input from user
         Scanner input = new Scanner(System.in);
-        String[] words = {
+        // define all stop words in language
+        Set<String>stop_words = new HashSet<>(Arrays.asList(
                 "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", "as",
                 "at", "be", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can't", "cannot",
                 "could", "couldn't", "did", "didn't", "do", "does", "doesn't", "doing", "don't", "down", "during", "each",
@@ -21,13 +23,15 @@ public class Main {
                 "we're", "we've", "were", "weren't", "what", "what's", "when", "when's", "where", "where's", "which", "while",
                 "who", "who's", "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're",
                 "you've", "your", "yours", "yourself", "yourselves"
-        };
-
+        ));
+        // create object from Hashmap type to store a word and number of repeated in the statement
         Map<String, Integer> map = new HashMap<>();
         System.out.println("Please insert your statement to processing : ");
+        //read  from user the statment
         String statment = input.nextLine();
-//       statment= input.next();
+
         String[] result = statment.split(" ");
+        /*    // need to found another solution  by ysing Collection and Stream  classes   ?????
 //       List<String> list = Stream.of(stopWords)
 //               .map(result::)
 //               .collect(Collectors.toList());
@@ -36,14 +40,13 @@ public class Main {
 //
 //                .filter(word-> !word.contains(words)).collect(Collectors.toList());
 //        System.out.println(list);
-
+*/
+        //loop for the array after split user statement
         for (String s : result) {
+            // check if this word isn't  in  stop words list
+            if (!stop_words.contains(s))
+                map.put(s, map.getOrDefault(s,0) + 1);
 
-            if (map.containsKey(s))
-
-                map.put(s, map.get(s) + 1);
-            else
-                map.put(s,1);
         }
 
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
